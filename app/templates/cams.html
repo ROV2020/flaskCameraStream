@@ -1,0 +1,40 @@
+<body >
+<dev id="img1">
+</dev>
+
+<dev id="img2">
+</dev>
+</body>
+<script>
+    function stream(){
+        img1=document.getElementById("img1")
+        img2=document.getElementById("img2")
+        while(true){
+            img1.style.backgroundImage=send("/watchCam1")
+            img2.style.backgroundImage=send("/watchCam2")
+            console.log(send("/watchCam2"))
+        }
+    }
+    function send(theURL){
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", theURL, false ); // false for synchronous request
+            xmlHttp.send( null );
+            return xmlHttp.responseText;
+        }
+    </script>
+
+<style>
+    dev{
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+        margin-left: 50px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        padding: 0px;
+    }
+    img{
+        width: 100%;
+        height: 100%;
+    }
+</style>

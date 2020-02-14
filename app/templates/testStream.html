@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<head>
+    <title>Test page</title>
+    <style>
+        dev{
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+            margin-left: 50px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            padding: 0px;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body onload="stream()">
+    
+    <iframe src="/cams"></iframe>
+    <button onclick="stop()">stop stream</button>
+    <button onclick="start()">start` stream</button>
+    <button onclick="resume()">resume stream</button>
+    <button onclick="pause()">pause stream</button>
+    <button onclick="list()">list cameras</button>
+
+    <script>
+        function stream(){
+            img1=document.getElementById("img1")
+            img2=document.getElementById("img2")
+            while(true){
+                img1.style.backgroundImage=send("/watchCam1")
+                img2.style.backgroundImage=send("/watchCam2")
+            }
+        }
+
+        function sendstop(){
+            send("/stopCam1")
+            send("/stopCam2")
+        }
+
+        function start(){
+            send("/streamCam1")
+            send("/streamCam2")
+        }
+
+        function resume(){
+            send("/resumeCam1")
+            send("/resumeCam2")
+        }
+
+        function pause(){
+            send("/pauseCam1")
+            send("/pauseCam2")
+        }
+
+        function list(){
+            alert(send("/listCam"))
+        }
+
+        function send(theURL){
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", theURL, false ); // false for synchronous request
+            xmlHttp.send( null );
+            return xmlHttp.responseText;
+        }
+    </script>
+</body>
